@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Promemoria</string>
+    <string name="desc_add">Aggiungi promemoria</string>
+    <string name="label_body">Testo promemoria&#8230;</string>
+    <string name="date">Data</string>
+    <string name="time">Ora</string>
+    <string name="save_btn">Salva promemoria</string>
+    <string name="cancel_bnt">Annulla</string>
+    <string name="chip_showAll">Tutti i promemoria</string>
+    <string name="chip_showCompleted">Promemoria completati</string>
+    <string name="delete">Elimina</string>
+    <string name="delete_all">Elimina tutti</string>
+    <string name="save_edit_btn">Salva Modifiche</string>
+    <string name="settings">Impostazioni</string>
+    <string name="share">Condividi</string>
+</resources>
