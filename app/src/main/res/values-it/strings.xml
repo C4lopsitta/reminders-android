@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Promemoria</string>
     <string name="desc_add">Aggiungi promemoria</string>
-    <string name="label_body">Testo promemoria&#8230;</string>
+    <string name="label_body">Corpo promemoria&#8230;</string>
     <string name="date">Data</string>
     <string name="time">Ora</string>
     <string name="save_btn">Salva promemoria</string>
@@ -14,4 +14,14 @@
     <string name="save_edit_btn">Salva Modifiche</string>
     <string name="settings">Impostazioni</string>
     <string name="share">Condividi</string>
+    <string name="show_notif">Ricevi una notifica</string>
+    <string name="copy_clip">Copia negli Appunti</string>
+    <string name="copy_copied">Copiato negli Appunti</string>
+    <string name="snack_deleted">Promemoria eliminato</string>
+    <string name="snack_undo">Annulla</string>
+    <string name="snack_deleteAll">Eliminati tutti i Promemoria</string>
+    <string name="label_title">Titolo promemoria&#8230;</string>
+    <string name="err_title_required">Devi aggiungere un titolo al promemoria</string>
+    <string name="err_title_too_long">Il titolo deve essere sotto a 128 caratteri</string>
+    <string name="share_header">Promemoria</string>
 </resources>

@@ -5,6 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Switch
+        android:id="@+id/getnotif_switch"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/show_notif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_reminder_body" />
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topbar"
         android:layout_width="match_parent"
@@ -16,6 +29,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_reminder_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topbar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reminder_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_title" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_reminder_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,55 +56,30 @@
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topbar">
+        app:layout_constraintTop_toBottomOf="@+id/layout_reminder_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/reminder_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/label_body" />
+            android:focusableInTouchMode="true"
+            android:hint="@string/label_body"
+            android:minHeight="128dp"
+            app:textInputLayoutFocusedRectEnabled="true" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <EditText
-        android:id="@+id/reminder_date"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/date"
-        android:imeActionLabel="@string/date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/layout_reminder_body"
-        app:layout_constraintTop_toBottomOf="@+id/layout_reminder_body" />
-
-    <EditText
-        android:id="@+id/reminder_time"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/time"
-        android:imeActionLabel="@string/time"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/reminder_date"
-        app:layout_constraintTop_toTopOf="@+id/reminder_date" />
 
     <Button
         android:id="@+id/btn_reminder_save"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/save_btn"
         android:textColorHighlight="#673AB7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reminder_date" />
+        app:layout_constraintTop_toBottomOf="@+id/getnotif_switch" />
 
     <Button
         android:id="@+id/btn_cancel"
@@ -85,6 +91,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btn_reminder_save"
         app:layout_constraintTop_toBottomOf="@+id/btn_reminder_save" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

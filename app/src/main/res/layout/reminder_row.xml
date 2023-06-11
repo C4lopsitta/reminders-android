@@ -14,7 +14,7 @@
         android:gravity="center" />
 
     <TextView
-        android:id="@+id/reminder_view_body"
+        android:id="@+id/reminder_view_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"

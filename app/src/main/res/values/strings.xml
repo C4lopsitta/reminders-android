@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Reminders</string>
     <string name="desc_add">Add Reminder</string>
-    <string name="label_body">Reminder title&#8230;</string>
+    <string name="label_body">Reminder body&#8230;</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="save_btn">Save reminder</string>
@@ -13,4 +13,14 @@
     <string name="save_edit_btn">Save Edits</string>
     <string name="settings">Settings</string>
     <string name="share">Share</string>
+    <string name="show_notif">Get a notification</string>
+    <string name="copy_clip">Copy to Clipboard</string>
+    <string name="copy_copied">Copied to clipboard</string>
+    <string name="snack_deleted">Reminder deleted</string>
+    <string name="snack_undo">Undo</string>
+    <string name="snack_deleteAll">Deleted all Reminders</string>
+    <string name="label_title">Reminder title&#8230;</string>
+    <string name="err_title_required">You must add a title to your reminder</string>
+    <string name="err_title_too_long">The title cannot be longer than 128 characters</string>
+    <string name="share_header">Reminder</string>
 </resources>

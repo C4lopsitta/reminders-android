@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/clipboard_copy"
+        android:title="@string/copy_clip" />
+    <item
         android:id="@+id/share"
         android:icon="@drawable/share"
         android:title="@string/share" />
