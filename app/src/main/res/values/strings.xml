@@ -7,7 +7,7 @@
     <string name="save_btn">Save reminder</string>
     <string name="cancel_bnt">Cancel</string>
     <string name="chip_showAll">All reminders</string>
-    <string name="chip_showCompleted">Completed reminders</string>
+    <string name="chip_showCompleted">Completed</string>
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
     <string name="save_edit_btn">Save Edits</string>
@@ -23,4 +23,9 @@
     <string name="err_title_required">You must add a title to your reminder</string>
     <string name="err_title_too_long">The title cannot be longer than 128 characters</string>
     <string name="share_header">Reminder</string>
+    <string name="chip_showToComplete">Not completed</string>
+    <string name="notif_reminder_key">Reminder alerts</string>
+    <string name="notif_reminder_desc">Notifications from reminders that you\'ve created</string>
+    <string name="first_launch_splash">Welcome to Reminders!</string>
+    <string name="first_launch_start">Let\'s start</string>
 </resources>

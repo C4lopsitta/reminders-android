@@ -8,7 +8,7 @@
     <string name="save_btn">Salva promemoria</string>
     <string name="cancel_bnt">Annulla</string>
     <string name="chip_showAll">Tutti i promemoria</string>
-    <string name="chip_showCompleted">Promemoria completati</string>
+    <string name="chip_showCompleted">Completati</string>
     <string name="delete">Elimina</string>
     <string name="delete_all">Elimina tutti</string>
     <string name="save_edit_btn">Salva Modifiche</string>
@@ -24,4 +24,9 @@
     <string name="err_title_required">Devi aggiungere un titolo al promemoria</string>
     <string name="err_title_too_long">Il titolo deve essere sotto a 128 caratteri</string>
     <string name="share_header">Promemoria</string>
+    <string name="chip_showToComplete">Da completare</string>
+    <string name="notif_reminder_key">Avvisi dei promemoria</string>
+    <string name="notif_reminder_desc">Notifiche dai promemoria che hai impostato</string>
+    <string name="first_launch_splash">Benvenuto in Promemoria!</string>
+    <string name="first_launch_start">Iniziamo</string>
 </resources>

@@ -48,6 +48,7 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
 //            dataList.removeAt(position)
 //            notifyDataSetChanged()
 //        }
+
         holder.title.setOnClickListener {
             val i = Intent(pkgContext, ShowReminder::class.java)
             i.putExtra("title", dataList[position].title)

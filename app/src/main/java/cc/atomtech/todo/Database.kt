@@ -1,6 +1,8 @@
 package cc.atomtech.todo
 
+import android.app.AlarmManager
 import android.content.ClipboardManager
+import android.content.SharedPreferences
 import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -76,5 +78,7 @@ abstract class AppDatabase : RoomDatabase() {
 lateinit var db: RoomDatabase
 lateinit var reminderDao: ReminderDao
 lateinit var clipboard: ClipboardManager
+lateinit var sharedPref: SharedPreferences
+lateinit var alarmManager: AlarmManager
 
 
