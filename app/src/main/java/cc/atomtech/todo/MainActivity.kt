@@ -1,6 +1,7 @@
 package cc.atomtech.todo
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.app.AlarmManager
 import android.app.DownloadManager.Request
 import android.app.Notification
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var topbar: Toolbar
     private lateinit var chips: ChipGroup
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
