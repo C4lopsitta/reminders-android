@@ -3,11 +3,6 @@ package cc.atomtech.todo
 import android.Manifest
 import android.annotation.TargetApi
 import android.app.AlarmManager
-import android.app.DownloadManager.Request
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -18,14 +13,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +24,6 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
    private lateinit var fabAdd: FloatingActionButton
@@ -56,30 +44,16 @@ class MainActivity : AppCompatActivity() {
       //setup database
       db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "reminders")
          .allowMainThreadQueries()
-         .addMigrations(migrationV1_2, migrationV1_3, migrationV2_3)
+         .addMigrations(migrationV1_2, migrationV1_3, migrationV2_3, migrationV3_4)
          .build()
       reminderDao = (db as AppDatabase).reminderDao()
 
       //init services
       clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-      notifManager = getReminderNotificationChannelService(getString(R.string.notif_reminder_key), getString(R.string.notif_reminder_desc))
       alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-
-      //TEST NOTIFICATION\\
-      val i = Intent(this, NotifReciever::class.java)
-      val pendingIntent = PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_IMMUTABLE)
-      val calendar = Calendar.getInstance()
-      calendar.set(2023, Calendar.JULY,17, 11, 16, 0)
-      i.putExtra("title", "What a fancy reminder")
-      i.putExtra("desc", "Yeah what a fancy reminder notification")
-      i.putExtra("id", 69420)
-
-      alarmManager.setExact(
-         AlarmManager.RTC_WAKEUP,
-         calendar.timeInMillis,
-         pendingIntent
-      )
+      Notifier.getNotificationService(getString(R.string.notif_reminder_key),
+         getString(R.string.notif_reminder_desc), this)
 
 
       //get shared preferences
@@ -164,16 +138,6 @@ class MainActivity : AppCompatActivity() {
       viewList.adapter = adapter
    }
 
-   private fun getReminderNotificationChannelService(name:String, desc:String): NotificationManager{
-      val importance = NotificationManager.IMPORTANCE_DEFAULT
-      val mChannel = NotificationChannel(reminderNotificationChannelID, name, importance)
-      mChannel.description = desc
-      val notifManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-      notifManager.createNotificationChannel(mChannel)
-      return notifManager
-   }
-
-
    private fun checkIfAppHasRunBefore() {
       if(sharedPref.getBoolean("isFirstLaunch", true)) {
          with(sharedPref.edit()) {
@@ -183,19 +147,6 @@ class MainActivity : AppCompatActivity() {
          //start first launch experience UI
          val intent = Intent(this, FirstInstallExperience::class.java)
          startActivity(intent)
-
-//            val notif = NotificationCompat.Builder(this, reminderNotificationChannelID)
-//                .setSmallIcon(R.drawable.add_icon)
-//                .setContentTitle("Hello world")
-//                .setContentText("This is a notification!")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//                .setStyle(NotificationCompat.InboxStyle())
-//
-//            if (notifManager.areNotificationsEnabled()) {
-//                with(NotificationManagerCompat.from(this)) {
-//                    notify(1, notif.build())
-//                }
-//            }
       }
    }
 

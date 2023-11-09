@@ -14,8 +14,8 @@ data class Reminder(
     @ColumnInfo(name = "body") var body: String?,
     @ColumnInfo(name = "isCompleted") var isCompleted: Boolean,
     @ColumnInfo(name = "title") var title: String?, /*db v2 added*/
-    @ColumnInfo(name = "getNotification") var getNotification: Boolean //db v3 added
-    //TODO: Add date/time col
+    @ColumnInfo(name = "getNotification") var getNotification: Boolean, /*db v3 added*/
+    @ColumnInfo(name = "notificationTimestamp") var notificationTimestamp: Int? /*db v4 added */
 )
 
 @Dao
@@ -25,6 +25,9 @@ interface ReminderDao {
 
     @Query("SELECT * FROM reminders WHERE isCompleted = true")
     suspend fun getCompletedReminders() : List<Reminder>
+
+    @Query("SELECT * FROM reminders WHERE isCompleted = false")
+    suspend fun getUncompletedReminders() : List<Reminder>
 
     @Query("UPDATE reminders SET isCompleted = :isCompleted WHERE id = :id")
     fun updateIsCompleted(isCompleted: Boolean, id: Long)
@@ -65,10 +68,22 @@ val migrationV1_3 = object : Migration(1, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE reminders ADD COLUMN title TEXT")
         database.execSQL("ALTER TABLE reminders ADD COLUMN getNotification INTEGER NOT NULL default 0")
-        database.execSQL("UPDATE reminders SET title = \"REMINDER TITLE\"")
+        database.execSQL("UPDATE reminders SET title = \"Tap to view reminder\"")
     }
 }
-@Database(entities = [Reminder::class], version = 3)
+val migrationV3_4 = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE reminders ADD COLUMN notificationTimestamp INTEGER");
+    }
+}
+//val migrationV4_5 = object : Migration(4, 5) {
+//    override fun migrate(database: SupportSQLiteDatabase) {
+////        database.execSQL("ALTER TABLE reminders DROP COLUMN notificationTimestamp");
+////        database.execSQL("ALTER TABLE reminders ADD COLUMN notificationTimestamp INTEGER");
+//    }
+//}
+
+@Database(entities = [Reminder::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reminderDao() : ReminderDao
 }

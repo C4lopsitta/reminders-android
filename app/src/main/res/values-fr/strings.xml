@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Reminders</string>
+    <string name="app_name">Rappels</string>
+    <string name="desc_add">Ajoutez rappel</string>
+    <string name="label_body">Corps&#8230;</string>
+    <string name="date">Date</string>
+    <string name="time">Heure</string>
+    <string name="save_btn">Sauvegarder le rappel</string>
+    <string name="cancel_bnt">Annuller</string>
+    <string name="chip_showAll">Tous les rappels</string>
+    <string name="chip_showCompleted">Complété</string>
+    <string name="delete">Supprimer</string>
+    <string name="delete_all">Supprimer tout</string>
+    <string name="save_edit_btn">Sauvegarder les modifications</string>
+    <string name="settings">Réglages</string>
+    <string name="share">Partager</string>
+    <string name="show_notif">Recevez une alerte</string>
+    <string name="copy_clip">Copier dans le Presse-papier</string>
+    <string name="copy_copied">Copié dans le Presse-papiers</string>
+    <string name="snack_deleted">Supprimer le rappel</string>
+    <string name="snack_undo">Annuller</string>
+    <string name="snack_deleteAll">Supprimé tous les rappels</string>
+    <string name="label_title">Titre&#8230;</string>
+    <string name="err_title_required">Vous devez ajouter un titre</string>
+    <string name="err_title_too_long">Le titre ne peut pas dépasser 128 caractères</string>
+    <string name="share_header">Rappel</string>
+    <string name="chip_showToComplete">Pas complété</string>
+    <string name="notif_reminder_key">Alertes de rappel</string>
+    <string name="notif_reminder_desc">Notifications provenant des rappels que vous avez créés</string>
+    <string name="first_launch_splash">Bienvenue sur Rappels</string>
+    <string name="first_launch_start">Commençons</string>
 </resources>

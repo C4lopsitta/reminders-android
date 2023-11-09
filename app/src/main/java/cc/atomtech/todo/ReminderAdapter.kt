@@ -77,7 +77,7 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
                 R.id.clipboard_copy -> {
                     var clip: String = ""
                     if(!body.isNullOrEmpty())
-                        clip = String.format("[DATE TIME] ${body}")
+                        clip = String.format("[UNIX : ${dataList[position].notificationTimestamp}] ${dataList[position].title} ${dataList[position].body}")
                     clipboard.setPrimaryClip(ClipData.newPlainText(clip, clip))
                     Snackbar.make(view, pkgContext.getString(R.string.copy_copied), Snackbar.LENGTH_SHORT).show()
                 }
@@ -95,16 +95,17 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
                     }).show()
                 }
                 R.id.share -> {
-                    var shareText: String = ""
-                    if(!body.isNullOrEmpty())
-                        shareText = String.format("${pkgContext.getString(R.string.share_header)}\ndate, time\n${dataList[position].title}\n${dataList[position].body}</p>")
+                    var shareText: String = String.format("${pkgContext.getString(R.string.share_header)}" +
+                          "\nTIMESTAMP NOTIFICATION: ${dataList[position].notificationTimestamp}\n" +
+                          "${dataList[position].title}\n${dataList[position].body}");
+
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
                         putExtra(Intent.EXTRA_TEXT, shareText)
                         type = "text/plain"
                     }
-                    val shareIntent = Intent.createChooser(sendIntent, "Reminder")
-                    pkgContext.startActivity(shareIntent)
+                    val shareIntent = Intent.createChooser(sendIntent, "Reminder");
+                    pkgContext.startActivity(shareIntent);
                 }
             }
             true
