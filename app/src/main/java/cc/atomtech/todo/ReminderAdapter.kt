@@ -50,13 +50,13 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
 //        }
 
         holder.title.setOnClickListener {
-            val i = Intent(pkgContext, ShowReminder::class.java)
-            i.putExtra("title", dataList[position].title)
-            i.putExtra("body", dataList[position].body)
-            i.putExtra("isCompleted", dataList[position].isCompleted)
-            i.putExtra("reminderID", dataList[position].id)
-            i.putExtra("getNotification", dataList[position].getNotification)
-            //TODO: Add date and time (and notification settings)
+            val i = Intent(pkgContext, ShowReminder::class.java);
+                i.putExtra("title", dataList[position].title);
+                i.putExtra("body", dataList[position].body);
+                i.putExtra("isCompleted", dataList[position].isCompleted);
+                i.putExtra("reminderID", dataList[position].id);
+                i.putExtra("getNotification", dataList[position].getNotification);
+                i.putExtra("notificationTimestamp", dataList[position].notificationTimestamp);
             pkgContext.startActivity(i)
         }
         holder.title.setOnLongClickListener {
@@ -75,11 +75,10 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.clipboard_copy -> {
-                    var clip: String = ""
-                    if(!body.isNullOrEmpty())
-                        clip = String.format("[UNIX : ${dataList[position].notificationTimestamp}] ${dataList[position].title} ${dataList[position].body}")
-                    clipboard.setPrimaryClip(ClipData.newPlainText(clip, clip))
-                    Snackbar.make(view, pkgContext.getString(R.string.copy_copied), Snackbar.LENGTH_SHORT).show()
+                    handleClipboardCopy(view,
+                                        dataList[position].notificationTimestamp,
+                                        dataList[position].title,
+                                        dataList[position].body);
                 }
                 R.id.hold_delete -> {
                     Snackbar.make(view, pkgContext.getString(R.string.snack_deleted), Snackbar.LENGTH_SHORT).setAction(pkgContext.getString(R.string.snack_undo)){
@@ -95,22 +94,46 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
                     }).show()
                 }
                 R.id.share -> {
-                    var shareText: String = String.format("${pkgContext.getString(R.string.share_header)}" +
-                          "\nTIMESTAMP NOTIFICATION: ${dataList[position].notificationTimestamp}\n" +
-                          "${dataList[position].title}\n${dataList[position].body}");
-
-                    val sendIntent: Intent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, shareText)
-                        type = "text/plain"
-                    }
-                    val shareIntent = Intent.createChooser(sendIntent, "Reminder");
-                    pkgContext.startActivity(shareIntent);
+                    handleShare(dataList[position].notificationTimestamp,
+                                dataList[position].title,
+                                dataList[position].body);
                 }
             }
-            true
-        })
-        popup.show()
+            true;
+        });
+        popup.show();
+    }
+
+    private fun handleClipboardCopy(view: View, timestamp: Int?, title: String?, body: String?) {
+        if(title.isNullOrEmpty()) return;
+        var clip = title;
+        if(timestamp != null && timestamp >= 0)
+            clip = timestamp.toString() + clip;
+        if(!body.isNullOrEmpty())
+            clip += body;
+
+        clipboard.setPrimaryClip(ClipData.newPlainText("Reminder", clip));
+        Snackbar.make(view, pkgContext.getString(R.string.copy_copied), Snackbar.LENGTH_SHORT).show();
+    }
+
+    private fun handleShare(timestamp: Int?, title: String?, body: String?) {
+        if(title.isNullOrEmpty()) return;
+        var text = pkgContext.getString(R.string.share_header) + title;
+        if(timestamp != null && timestamp >= 0)
+            text += " TIME:" + timestamp.toString();
+        if(!body.isNullOrEmpty())
+            text += "\n" + body;
+
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type= "text/plain"
+        };
+        pkgContext.startActivity(Intent.createChooser(intent, "Reminder"));
+    }
+
+    private fun handleDelete() {
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
