@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import java.sql.Timestamp
 
 @Entity(tableName = "reminders")
 data class Reminder(
@@ -15,7 +16,8 @@ data class Reminder(
     @ColumnInfo(name = "isCompleted") var isCompleted: Boolean,
     @ColumnInfo(name = "title") var title: String?, /*db v2 added*/
     @ColumnInfo(name = "getNotification") var getNotification: Boolean, /*db v3 added*/
-    @ColumnInfo(name = "notificationTimestamp") var notificationTimestamp: Int? /*db v4 added */
+    @ColumnInfo(name = "notificationTimestamp") var notificationTimestamp: Int?, /*db v4 added */
+    @ColumnInfo(name = "creationTimestamp") var creationTimestamp: Long?
 )
 
 @Dao
@@ -76,8 +78,13 @@ val migrationV3_4 = object : Migration(3, 4) {
             database.execSQL("ALTER TABLE reminders ADD COLUMN notificationTimestamp INTEGER");
     }
 }
+val migrationV4_5 = object : Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE reminders ADD COLUMN creationTimestamp INTEGER");
+    }
+}
 
-@Database(entities = [Reminder::class], version = 4)
+@Database(entities = [Reminder::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reminderDao() : ReminderDao
 }

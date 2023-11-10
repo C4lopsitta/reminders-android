@@ -60,7 +60,7 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
          pkgContext.startActivity(intent);
       }
       holder.title.setOnLongClickListener {
-         showPopup(holder.title, dataList[position].title, position)
+         showPopup(holder.frame, dataList[position].title, position)
          true
       }
       holder.frame.setOnLongClickListener {
@@ -118,18 +118,24 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
       pkgContext.startActivity(Intent.createChooser(intent, "Reminder"));
    }
 
+   // TODO: Fix empty box (porco dio cane)
    private fun handleDelete(view: View, position: Int) {
+      view.visibility = View.GONE;
+
       Snackbar.make(view, pkgContext.getString(R.string.snack_deleted), Snackbar.LENGTH_SHORT).setAction(pkgContext.getString(R.string.snack_undo)){
+         view.visibility = View.VISIBLE;
+
       }.addCallback(object: Snackbar.Callback() {
          override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
             if(event == DISMISS_EVENT_SWIPE || event == DISMISS_EVENT_TIMEOUT){
-               reminderDao.deleteReminder(dataList[position])
-               notifyItemRemoved(position)
-               dataList.removeAt(position)
-               notifyDataSetChanged()
+               reminderDao.deleteReminder(dataList[position]);
+               view.visibility = View.VISIBLE;
+               notifyItemRemoved(position);
+               dataList.removeAt(position);
+               notifyDataSetChanged();
             }
          }
-      }).show()
+      }).show();
    }
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

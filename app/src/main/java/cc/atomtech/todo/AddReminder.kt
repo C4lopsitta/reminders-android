@@ -15,7 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
+import java.sql.Timestamp
 import java.util.Calendar
+
+// TODO: Check if time/date is valid (in future)
+// TODO: Visualize error if date is invalid
+// TODO: Add predefined timers for reminders (in x minutes; today/tomorrow at hh:mm)
 
 class AddReminder : AppCompatActivity() {
     private lateinit var btnSave: Button;
@@ -84,7 +89,7 @@ class AddReminder : AppCompatActivity() {
         var timeInMillis: Long = 0
 
         lifecycleScope.launch {
-            val reminder = Reminder(0, editBody, false, editTitle, getNotification, timeInMillis.toInt());
+            val reminder = Reminder(0, editBody, false, editTitle, getNotification, timeInMillis.toInt(), 0);
             reminderDao.addReminder(reminder)
         }
 

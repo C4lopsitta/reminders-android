@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
       //setup database
       db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "reminders")
          .allowMainThreadQueries()
-         .addMigrations(migrationV1_2, migrationV1_3, migrationV2_3, migrationV3_4)
+         .addMigrations(migrationV1_2, migrationV1_3, migrationV2_3, migrationV3_4, migrationV4_5)
          .build()
       reminderDao = (db as AppDatabase).reminderDao()
 
