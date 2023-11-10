@@ -42,7 +42,6 @@ class AddReminder : AppCompatActivity() {
         val currentTime = Calendar.getInstance();
 
         var calendar = Calendar.getInstance();
-        calendar.set(1970, 0, 1, 0, 0);
 
         reminderTitle = findViewById(R.id.reminder_title);
         layoutReminderTitle = findViewById(R.id.layout_reminder_title);
@@ -65,15 +64,16 @@ class AddReminder : AppCompatActivity() {
         }
 
         reminderDate.setText("${currentTime.get(Calendar.DAY_OF_MONTH)}/" +
-              "${currentTime.get(java.util.Calendar.MONTH)}/${currentTime.get(java.util.Calendar.YEAR)}");
+              "${currentTime.get(java.util.Calendar.MONTH) + 1}/${currentTime.get(java.util.Calendar.YEAR)}");
 
-        reminderTime.setText("${currentTime.get(Calendar.HOUR_OF_DAY)}:${currentTime.get(Calendar.MINUTE)}");
+        reminderTime.setText("${currentTime.get(Calendar.HOUR_OF_DAY)}" +
+              ":${prettifyMinute(calendar.get(Calendar.MINUTE))}");
 
         reminderDate.setOnClickListener {
             DatePickerDialog(this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     calendar.set(year, monthOfYear, dayOfMonth);
-                    reminderDate.setText("${dayOfMonth}/${monthOfYear}/${year}");
+                    reminderDate.setText("${dayOfMonth}/${monthOfYear + 1}/${year}");
                 },
                 currentTime.get(Calendar.YEAR),
                 currentTime.get(Calendar.MONTH),
@@ -85,7 +85,7 @@ class AddReminder : AppCompatActivity() {
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute);
                     calendar.set(Calendar.SECOND, 0);
-                    reminderTime.setText("${hourOfDay}:${minute}");
+                    reminderTime.setText("${hourOfDay}:${prettifyMinute(minute)}");
                 },
                 currentTime.get(Calendar.HOUR_OF_DAY),
                 currentTime.get(Calendar.MINUTE),
@@ -115,14 +115,10 @@ class AddReminder : AppCompatActivity() {
             reminderDao.addReminder(reminder)
         }
 
-        if(calendar.get(Calendar.YEAR) != 1970) {
-            timeInMillis = calendar.timeInMillis;
-            if(getNotification) {
-                Notifier.setNotification(this,0, editTitle, editBody?: "", calendar);
-                Log.i("NOTIFICATION_ADD_REMINDER", "Notificaiton set");
-            }
-        } else {
-            timeInMillis = -1;
+        timeInMillis = calendar.timeInMillis;
+        if(getNotification) {
+            Notifier.setNotification(this,0, editTitle, editBody?: "", calendar);
+            Log.i("NOTIFICATION_ADD_REMINDER", "Notificaiton set");
         }
 
         returnToMainActivity()
@@ -132,6 +128,13 @@ class AddReminder : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
+    }
+
+    private fun prettifyMinute(minute: Int): String {
+        var str = minute.toString();
+        if(str.length == 1)
+            str = "0${str}"
+        return str;
     }
 
 

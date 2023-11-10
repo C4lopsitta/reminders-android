@@ -50,14 +50,14 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
 //        }
 
         holder.title.setOnClickListener {
-            val i = Intent(pkgContext, ShowReminder::class.java);
-                i.putExtra("title", dataList[position].title);
-                i.putExtra("body", dataList[position].body);
-                i.putExtra("isCompleted", dataList[position].isCompleted);
-                i.putExtra("reminderID", dataList[position].id);
-                i.putExtra("getNotification", dataList[position].getNotification);
-                i.putExtra("notificationTimestamp", dataList[position].notificationTimestamp);
-            pkgContext.startActivity(i)
+            val intent = Intent(pkgContext, ShowReminder::class.java);
+                intent.putExtra("title", dataList[position].title)
+                      .putExtra("body", dataList[position].body)
+                      .putExtra("isCompleted", dataList[position].isCompleted)
+                      .putExtra("reminderID", dataList[position].id)
+                      .putExtra("getNotification", dataList[position].getNotification)
+                      .putExtra("notificationTimestamp", dataList[position].notificationTimestamp);
+            pkgContext.startActivity(intent)
         }
         holder.title.setOnLongClickListener {
             showPopup(holder.title, dataList[position].title, position)
@@ -70,16 +70,15 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
     }
     @SuppressLint("NotifyDataSetChanged")
     private fun showPopup(view: View, body: String?, position: Int){
-        val popup = PopupMenu(pkgContext, view)
+        val popup = PopupMenu(pkgContext, view);
         popup.inflate(R.menu.hold_menu)
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.clipboard_copy -> {
+                R.id.clipboard_copy ->
                     handleClipboardCopy(view,
                                         dataList[position].notificationTimestamp,
                                         dataList[position].title,
                                         dataList[position].body);
-                }
                 R.id.hold_delete -> {
                     Snackbar.make(view, pkgContext.getString(R.string.snack_deleted), Snackbar.LENGTH_SHORT).setAction(pkgContext.getString(R.string.snack_undo)){
                     }.addCallback(object: Snackbar.Callback() {
@@ -93,11 +92,10 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
                         }
                     }).show()
                 }
-                R.id.share -> {
+                R.id.share ->
                     handleShare(dataList[position].notificationTimestamp,
                                 dataList[position].title,
                                 dataList[position].body);
-                }
             }
             true;
         });
