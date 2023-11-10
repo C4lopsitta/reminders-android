@@ -8,9 +8,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatActivity.NOTIFICATION_SERVICE
-import androidx.core.content.ContextCompat.getSystemService
 import java.util.Calendar
 
 //lateinit var notifManager: NotificationManager
@@ -33,10 +31,10 @@ class Notifier {
          this.notifManager = getReminderNotificationChannelService(pkgContext, key, desc);
          context = pkgContext;
       }
-      public fun setNotification(id: Int, title: String, desc: String, date: Calendar) {
-         setNotification(this.context, id, title, desc, date);
+      public fun registerNotification(id: Int, title: String, desc: String, date: Calendar) {
+         registerNotification(this.context, id, title, desc, date);
       }
-      public fun setNotification(context: Context, id: Int, title: String, desc: String, date: Calendar) {
+      public fun registerNotification(context: Context, id: Int, title: String, desc: String, date: Calendar) {
          var intent = Intent(context, NotifReciever::class.java);
          intent.putExtra("title", title)
                .putExtra("desc", desc)

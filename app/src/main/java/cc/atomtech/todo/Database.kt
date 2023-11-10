@@ -23,10 +23,10 @@ interface ReminderDao {
     @Query("SELECT * FROM reminders")
     suspend fun getReminders() : List<Reminder>
 
-    @Query("SELECT * FROM reminders WHERE isCompleted = true")
+    @Query("SELECT * FROM reminders WHERE isCompleted = 1")
     suspend fun getCompletedReminders() : List<Reminder>
 
-    @Query("SELECT * FROM reminders WHERE isCompleted = false")
+    @Query("SELECT * FROM reminders WHERE isCompleted = 0")
     suspend fun getUncompletedReminders() : List<Reminder>
 
     @Query("UPDATE reminders SET isCompleted = :isCompleted WHERE id = :id")
@@ -76,12 +76,6 @@ val migrationV3_4 = object : Migration(3, 4) {
             database.execSQL("ALTER TABLE reminders ADD COLUMN notificationTimestamp INTEGER");
     }
 }
-//val migrationV4_5 = object : Migration(4, 5) {
-//    override fun migrate(database: SupportSQLiteDatabase) {
-////        database.execSQL("ALTER TABLE reminders DROP COLUMN notificationTimestamp");
-////        database.execSQL("ALTER TABLE reminders ADD COLUMN notificationTimestamp INTEGER");
-//    }
-//}
 
 @Database(entities = [Reminder::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {

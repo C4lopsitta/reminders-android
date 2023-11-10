@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Switch
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.Toolbar
@@ -30,6 +29,8 @@ class AddReminder : AppCompatActivity() {
     private lateinit var reminderDate: AppCompatEditText;
     private lateinit var reminderTime: AppCompatEditText;
 
+    private var calendar = Calendar.getInstance();
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
@@ -39,9 +40,6 @@ class AddReminder : AppCompatActivity() {
         setSupportActionBar(topbar);
 
 
-        val currentTime = Calendar.getInstance();
-
-        var calendar = Calendar.getInstance();
 
         reminderTitle = findViewById(R.id.reminder_title);
         layoutReminderTitle = findViewById(R.id.layout_reminder_title);
@@ -63,37 +61,12 @@ class AddReminder : AppCompatActivity() {
             returnToMainActivity();
         }
 
-        reminderDate.setText("${currentTime.get(Calendar.DAY_OF_MONTH)}/" +
-              "${currentTime.get(java.util.Calendar.MONTH) + 1}/${currentTime.get(java.util.Calendar.YEAR)}");
+        setupTimeAndDateInputs();
 
-        reminderTime.setText("${currentTime.get(Calendar.HOUR_OF_DAY)}" +
-              ":${prettifyMinute(calendar.get(Calendar.MINUTE))}");
 
-        reminderDate.setOnClickListener {
-            DatePickerDialog(this,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    calendar.set(year, monthOfYear, dayOfMonth);
-                    reminderDate.setText("${dayOfMonth}/${monthOfYear + 1}/${year}");
-                },
-                currentTime.get(Calendar.YEAR),
-                currentTime.get(Calendar.MONTH),
-                currentTime.get(Calendar.DAY_OF_MONTH)).show();
-        }
-        reminderTime.setOnClickListener {
-            TimePickerDialog(this,
-                TimePickerDialog.OnTimeSetListener {view, hourOfDay, minute ->
-                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                    calendar.set(Calendar.MINUTE, minute);
-                    calendar.set(Calendar.SECOND, 0);
-                    reminderTime.setText("${hourOfDay}:${prettifyMinute(minute)}");
-                },
-                currentTime.get(Calendar.HOUR_OF_DAY),
-                currentTime.get(Calendar.MINUTE),
-                true).show();
-        }
 
-        reminderTitle.isFocusableInTouchMode = true
-        reminderTitle.requestFocus()
+        reminderTitle.isFocusableInTouchMode = true;
+        reminderTitle.requestFocus();
     }
 
 
@@ -117,12 +90,18 @@ class AddReminder : AppCompatActivity() {
 
         timeInMillis = calendar.timeInMillis;
         if(getNotification) {
-            Notifier.setNotification(this,0, editTitle, editBody?: "", calendar);
+            Notifier.registerNotification(this,0, editTitle, editBody?: "", calendar);
             Log.i("NOTIFICATION_ADD_REMINDER", "Notificaiton set");
         }
 
         returnToMainActivity()
     }
+
+    //private fun attachOnClickToSwitch() {
+    //    getNotifSwitch.setOnClickListener {
+    //
+    //    }
+    //}
 
     private fun returnToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
@@ -135,6 +114,46 @@ class AddReminder : AppCompatActivity() {
         if(str.length == 1)
             str = "0${str}"
         return str;
+    }
+
+    private fun setupTimeAndDateInputs() {
+        val currentTime = Calendar.getInstance();
+
+        val dateString =
+            "${currentTime.get(Calendar.DAY_OF_MONTH)}/" +
+            "${currentTime.get(java.util.Calendar.MONTH) + 1}/" +
+            "${currentTime.get(java.util.Calendar.YEAR)}";
+        val timeString =
+            "${currentTime.get(Calendar.HOUR_OF_DAY)}:" +
+            "${prettifyMinute(calendar.get(Calendar.MINUTE))}"
+
+        reminderDate.setText(dateString);
+        reminderTime.setText(timeString);
+
+        reminderDate.setOnClickListener {
+            DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    calendar.set(year, monthOfYear, dayOfMonth);
+                    reminderDate.setText("${dayOfMonth}/${monthOfYear + 1}/${year}");
+                    getNotifSwitch.isChecked = true;
+                },
+                currentTime.get(Calendar.YEAR),
+                currentTime.get(Calendar.MONTH),
+                currentTime.get(Calendar.DAY_OF_MONTH)).show();
+        }
+        reminderTime.setOnClickListener {
+            TimePickerDialog(this,
+                TimePickerDialog.OnTimeSetListener {view, hourOfDay, minute ->
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    calendar.set(Calendar.MINUTE, minute);
+                    calendar.set(Calendar.SECOND, 0);
+                    reminderTime.setText("${hourOfDay}:${prettifyMinute(minute)}");
+                    getNotifSwitch.isChecked = true;
+                },
+                currentTime.get(Calendar.HOUR_OF_DAY),
+                currentTime.get(Calendar.MINUTE),
+                true).show();
+        }
     }
 
 
