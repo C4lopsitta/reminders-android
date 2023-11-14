@@ -61,8 +61,8 @@ class ShowReminder: AppCompatActivity() {
             editTitleWrapper.error = getString(R.string.err_title_too_long)
             return
         }
-        reminderDao.updateBodyAndTitle(reminderTitle, reminderBody, id)
-        reminderDao.updateGetNotification(getNotifSwitch.isChecked, id)
+        reminderDao.updateBodyAndTitle(reminderTitle, reminderBody, id);
+        updateGetNotification(getNotifSwitch.isChecked, id, reminderTitle, reminderBody);
 
         returnToMainActivity()
     }
@@ -81,5 +81,16 @@ class ShowReminder: AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateGetNotification(status: Boolean, id: Long, title: String, body: String) {
+        reminderDao.updateGetNotification(status, id);
+
+        when(status) {
+            // TODO : Add notification
+            else -> {
+                Notifier.unregisterNotification(this, id, title, body);
+            }
+        }
     }
 }

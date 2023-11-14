@@ -26,8 +26,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
-// TODO: Refactor this monster
-
 class MainActivity : AppCompatActivity() {
    private lateinit var fabAdd: FloatingActionButton
    private lateinit var adapter: ReminderAdapter

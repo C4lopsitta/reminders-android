@@ -14,9 +14,9 @@ import java.util.Calendar
 class Notifier {
    companion object {
       public final const val REMINDER_CHANNEL_ID: String = "reminders";
+      public final const val LOG_TAG: String = "NOTIFIER";
 
       private var notifManager: NotificationManager? = null;
-      private lateinit var context: Context;
 
       public fun notify(id: Int, notification: Notification) {
          notifManager?.notify(id, notification);
@@ -26,27 +26,33 @@ class Notifier {
 //         if(notifManager == null)
 //            throw Exception("Notification manager has been already instantiated");
          this.notifManager = getReminderNotificationChannelService(pkgContext, key, desc);
-         context = pkgContext;
-      }
-      public fun registerNotification(id: Long, title: String, desc: String, date: Calendar) {
-         registerNotification(this.context, id, title, desc, date);
       }
       public fun registerNotification(context: Context, id: Long, title: String, desc: String, date: Calendar) {
-         var intent = Intent(context, NotifReciever::class.java);
-         intent.putExtra("title", title)
-               .putExtra("desc", desc)
-               .putExtra("id", id);
-         var pendingIntent = PendingIntent
-            .getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+         var pendingIntent = getPendingIntent(context, id, title, desc);
 
-         Log.i("NOTIFIER", "Test notification content: $title - $desc " +
-               "; ID :: ${id}; TIME ${date.timeInMillis}");
+         Log.i(LOG_TAG, "Notification content: $title - $desc " +
+               "; ID :: $id; TIME ${date.timeInMillis}");
 
          try {
             NotifReciever.setExactAlarm(date.timeInMillis, pendingIntent);
          } catch (e: SecurityException) {
             e.printStackTrace();
          }
+      }
+
+      public fun unregisterNotification(context: Context, id: Long, title: String, desc: String) {
+         NotifReciever.dropExactAlarm(getPendingIntent(context, id, title, desc));
+         Log.i(LOG_TAG, "DROPPED Notification ID :: $id");
+      }
+
+      public fun getPendingIntent(context: Context, id: Long, title: String, desc: String): PendingIntent {
+         var intent = Intent(context, NotifReciever::class.java);
+         intent.putExtra("title", title)
+            .putExtra("desc", desc)
+            .putExtra("id", id);
+         var pendingIntent = PendingIntent
+            .getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE);
+         return pendingIntent;
       }
 
       private fun getReminderNotificationChannelService(context: Context, name: String, desc: String): NotificationManager {

@@ -38,5 +38,9 @@ class NotifReciever : BroadcastReceiver() {
       public fun setExactAlarm(time: Long, pendingIntent: PendingIntent) {
          alarmManager?.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
       }
+
+      public fun dropExactAlarm(pendingIntent: PendingIntent) {
+         alarmManager?.cancel(pendingIntent);
+      }
    }
 }

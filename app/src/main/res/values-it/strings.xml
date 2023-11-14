@@ -34,4 +34,5 @@
     <string name="settings_label_default_filter">Filtro predefinito per i promemoria</string>
     <string name="chip_with_notificaiton">Con notifica</string>
     <string name="chip_wihtout_notificaiton">Senza notifica</string>
+    <string name="settings_export_json">Esporta i promemoria in JSON</string>
 </resources>

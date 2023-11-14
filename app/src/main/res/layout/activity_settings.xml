@@ -41,4 +41,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topbar" />
 
+    <Button
+        android:id="@+id/settings_export"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/settings_export_json"
+        app:layout_constraintEnd_toEndOf="@+id/settings_dropdown_default_filter"
+        app:layout_constraintStart_toStartOf="@+id/settings_dropdown_default_filter"
+        app:layout_constraintTop_toBottomOf="@+id/settings_dropdown_default_filter" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

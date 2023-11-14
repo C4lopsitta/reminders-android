@@ -3,6 +3,7 @@ package cc.atomtech.todo
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -85,6 +86,7 @@ class AddReminder : AppCompatActivity() {
 
         var timeInMillis: Long = 0;
 
+        val context: Context = this;
 
         lifecycleScope.launch {
             var dbId: Long;
@@ -94,7 +96,7 @@ class AddReminder : AppCompatActivity() {
 
             timeInMillis = calendar.timeInMillis;
             if(getNotification) {
-                Notifier.registerNotification(dbId, editTitle, editBody ?: "", calendar);
+                Notifier.registerNotification(context, dbId, editTitle, editBody ?: "", calendar);
                 Log.i("NOTIFICATION_ADD_REMINDER", "Notificaiton set with id $dbId for time ${calendar.timeInMillis}");
             }
         }
@@ -110,7 +112,7 @@ class AddReminder : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun prettifyMinute(minute: Int): String {
+    private fun prettifyMinute(minute: Int): String { // Vaffanculo Giulia
         var str = minute.toString();
         if(str.length == 1)
             str = "0${str}"
