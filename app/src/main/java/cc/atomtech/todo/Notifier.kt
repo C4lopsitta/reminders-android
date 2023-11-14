@@ -45,7 +45,7 @@ class Notifier {
                "; ID :: ${id}; TIME ${date.timeInMillis}");
 
          try {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.timeInMillis, pendingIntent);
+            NotifReciever.setExactAlarm(date.timeInMillis, pendingIntent);
          } catch (e: SecurityException) {
             e.printStackTrace();
          }

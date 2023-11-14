@@ -98,12 +98,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun reminderDao() : ReminderDao
 }
 
-
-
-lateinit var db: RoomDatabase
-lateinit var reminderDao: ReminderDao
-
-lateinit var sharedPref: SharedPreferences
-lateinit var alarmManager: AlarmManager
-
-
+lateinit var db: RoomDatabase;
+lateinit var reminderDao: ReminderDao;

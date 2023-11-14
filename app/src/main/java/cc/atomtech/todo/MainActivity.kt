@@ -55,15 +55,14 @@ class MainActivity : AppCompatActivity() {
       //init services
 
       Clipboard.instantiate(getSystemService(CLIPBOARD_SERVICE) as ClipboardManager);
-
-      alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+      NotifReciever.instantiateAlarmManager(getSystemService(Context.ALARM_SERVICE) as AlarmManager);
+      SharedPreferences.instantiate(getSharedPreferences(getString(R.string.shared_pref_file), Context.MODE_PRIVATE));
 
       Notifier.getNotificationService(getString(R.string.notif_reminder_key),
          getString(R.string.notif_reminder_desc), this)
 
 
       //get shared preferences
-      sharedPref = getSharedPreferences(getString(R.string.shared_pref_file), Context.MODE_PRIVATE)
 
       //prompt for notification permission
       val requestPermissionLauncher =
@@ -172,11 +171,8 @@ class MainActivity : AppCompatActivity() {
    }
 
    private fun checkIfAppHasRunBefore() {
-      if(sharedPref.getBoolean("isFirstLaunch", true)) {
-         with(sharedPref.edit()) {
-            putBoolean("isFirstLaunch", false)
-            apply()
-         }
+      if(SharedPreferences.getNotNullBoolean("isFirstLaunch", true)) {
+         SharedPreferences.putBoolean("isFirstLaunch", false);
          //start first launch experience UI
          val intent = Intent(this, FirstInstallExperience::class.java)
          startActivity(intent)
