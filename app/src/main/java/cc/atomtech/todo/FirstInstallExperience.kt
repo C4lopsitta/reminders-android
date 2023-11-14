@@ -10,19 +10,21 @@ class FirstInstallExperience : AppCompatActivity() {
     lateinit var start: Button
 
     override fun onCreate(savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.first_launch_experience)
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.first_launch_experience);
 
-        start = findViewById(R.id.first_launch_start)
+        start = findViewById(R.id.first_launch_start);
+
+        SharedPreferences.putInt(getString(R.string.default_filter), Filters.ALL.ordinal);
 
         start.setOnClickListener {
-            returnToMainActivity()
+            returnToMainActivity();
         }
     }
 
     private fun returnToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
+        val intent = Intent(this, MainActivity::class.java);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

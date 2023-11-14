@@ -4,5 +4,7 @@
         <item>Tutti i promemoria</item>
         <item>Completati</item>
         <item>Non completati</item>
+        <item>Con notifica</item>
+        <item>Senza notifica</item>
     </string-array>
 </resources>

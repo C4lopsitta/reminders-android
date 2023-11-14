@@ -4,5 +4,7 @@
         <item>All reminders</item>
         <item>Completed</item>
         <item>Not completed</item>
+        <item>With notification</item>
+        <item>WWithout notification</item>
     </string-array>
 </resources>

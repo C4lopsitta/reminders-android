@@ -1,7 +1,6 @@
 package cc.atomtech.todo
 
 import android.Manifest
-import android.annotation.TargetApi
 import android.app.AlarmManager
 import android.content.ClipboardManager
 import android.content.Context
@@ -14,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -33,24 +33,22 @@ class MainActivity : AppCompatActivity() {
    private lateinit var topbar: Toolbar
    private lateinit var chips: ChipGroup
 
-   @TargetApi(Build.VERSION_CODES.KITKAT)
    override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-      setContentView(R.layout.activity_main)
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main);
 
       //init top bar and relative menu
-      topbar = findViewById(R.id.topbar)
-      setSupportActionBar(topbar)
+      topbar = findViewById(R.id.topbar);
+      setSupportActionBar(topbar);
 
       //setup database
       db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "reminders")
          .allowMainThreadQueries()
          .addMigrations(migrationV1_2, migrationV1_3, migrationV2_3, migrationV3_4, migrationV4_5)
-         .build()
-      reminderDao = (db as AppDatabase).reminderDao()
+         .build();
+      reminderDao = (db as AppDatabase).reminderDao();
 
       //init services
-
       Clipboard.instantiate(getSystemService(CLIPBOARD_SERVICE) as ClipboardManager);
       NotifReciever.instantiateAlarmManager(getSystemService(Context.ALARM_SERVICE) as AlarmManager);
       SharedPreferences.instantiate(getSharedPreferences(getString(R.string.shared_pref_file), Context.MODE_PRIVATE));
@@ -58,16 +56,13 @@ class MainActivity : AppCompatActivity() {
       Notifier.getNotificationService(getString(R.string.notif_reminder_key),
          getString(R.string.notif_reminder_desc), this)
 
-
-      //get shared preferences
-
       //prompt for notification permission
       val requestPermissionLauncher =
          registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-               Toast.makeText(this, "Got permission", Toast.LENGTH_LONG).show()
+               Toast.makeText(this, "Got permission", Toast.LENGTH_LONG).show();
             } else {
-               Toast.makeText(this, "Didnt get permission", Toast.LENGTH_LONG).show()
+               Toast.makeText(this, "Didnt get permission", Toast.LENGTH_LONG).show();
             }
          }
 
@@ -77,10 +72,10 @@ class MainActivity : AppCompatActivity() {
          }
          shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
             // TODO: Show view that explains why notifications are needed
-            Toast.makeText(this, "gimmie permission", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "gimmie permission", Toast.LENGTH_LONG).show();
          }
          else -> {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
          }
       }
 
@@ -93,34 +88,21 @@ class MainActivity : AppCompatActivity() {
       chips = findViewById(R.id.chips);
 
       //setup list
-      viewList.layoutManager = LinearLayoutManager(this)
-      getAndShowRemindersFromDb()
+      viewList.layoutManager = LinearLayoutManager(this);
+
+      showRemindersBySelectedChip(
+         SharedPreferences.getInt(getString(R.string.default_filter)) ?: R.id.showall);
 
       //add listener for floating action button
       fabAdd.setOnClickListener {
-         val intent = Intent(this, AddReminder::class.java)
-         startActivity(intent)
+         val intent = Intent(this, AddReminder::class.java);
+         startActivity(intent);
       }
 
+      // TODO: Fix crash on double tap
       chips.setOnCheckedStateChangeListener(ChipGroup.OnCheckedStateChangeListener() { chipGroup: ChipGroup, ints: MutableList<Int> ->
          val chip: Chip = chipGroup.findViewById<Chip>(ints[0]);
-         when(chip.id) {
-            R.id.showall -> lifecycleScope.launch {
-               showRemindersList(reminderDao.getReminders());
-            }
-            R.id.showcompleted -> lifecycleScope.launch {
-               showRemindersList(reminderDao.getCompletedReminders());
-            }
-            R.id.showtocomplete -> lifecycleScope.launch {
-               showRemindersList(reminderDao.getUncompletedReminders());
-            }
-            R.id.showwithnotification -> lifecycleScope.launch {
-               showRemindersList(reminderDao.getRemindersWithNotification());
-            }
-            R.id.showwithoutnotification -> lifecycleScope.launch {
-               showRemindersList(reminderDao.getRemindersWithoutNotification());
-            }
-         }
+         showRemindersBySelectedChip(chip.id);
       })
    }
 
@@ -173,6 +155,26 @@ class MainActivity : AppCompatActivity() {
          //start first launch experience UI
          val intent = Intent(this, FirstInstallExperience::class.java)
          startActivity(intent)
+      }
+   }
+
+   private fun showRemindersBySelectedChip(chip: Int) {
+      when(chip) {
+         R.id.showall -> lifecycleScope.launch {
+            showRemindersList(reminderDao.getReminders());
+         }
+         R.id.showcompleted -> lifecycleScope.launch {
+            showRemindersList(reminderDao.getCompletedReminders());
+         }
+         R.id.showtocomplete -> lifecycleScope.launch {
+            showRemindersList(reminderDao.getUncompletedReminders());
+         }
+         R.id.showwithnotification -> lifecycleScope.launch {
+            showRemindersList(reminderDao.getRemindersWithNotification());
+         }
+         R.id.showwithoutnotification -> lifecycleScope.launch {
+            showRemindersList(reminderDao.getRemindersWithoutNotification());
+         }
       }
    }
 

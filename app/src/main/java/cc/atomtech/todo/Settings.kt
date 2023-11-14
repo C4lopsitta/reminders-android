@@ -23,7 +23,6 @@ class Settings: AppCompatActivity() {
         exportButton = findViewById(R.id.settings_export);
 
         exportButton.setOnClickListener { Export.export(null); }
-
     }
 }
 

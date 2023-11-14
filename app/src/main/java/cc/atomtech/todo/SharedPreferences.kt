@@ -26,5 +26,27 @@ class SharedPreferences {
             this?.apply();
          }
       }
+
+      public fun getString(key: String): String? {
+         return sharedPreferences?.getString(key, "");
+      }
+
+      public fun putString(key: String, value: String) {
+         with(sharedPreferences?.edit()) {
+            Companion.putString(key, value);
+            this?.apply();
+         }
+      }
+
+      public fun getInt(key: String): Int? {
+         return sharedPreferences?.getInt(key, -1);
+      }
+
+      public fun putInt(key: String, int: Int) {
+         with(sharedPreferences?.edit()) {
+            putInt(key, int);
+            this?.apply();
+         }
+      }
    }
 }
