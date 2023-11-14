@@ -16,6 +16,30 @@ enum class Filters {
          Filters.WITHOUT_NOTIFICATION -> R.id.showwithoutnotification;
       }
    }
+
+   companion object {
+      public fun getEnumFromChipId(id: Int?): Filters {
+         return when(id) {
+            R.id.showall -> Filters.ALL;
+            R.id.showcompleted -> Filters.COMPLETED;
+            R.id.showtocomplete -> Filters.UNCOMPLETED;
+            R.id.showwithnotification -> Filters.WITH_NOTIFICATION;
+            R.id.showwithoutnotification -> Filters.WITHOUT_NOTIFICATION;
+            else -> {return Filters.ALL}
+         }
+      }
+
+      public fun getEnumFromOrdinal(ordinal: Int): Filters {
+         return when(ordinal) {
+            0 -> Filters.ALL;
+            1 -> Filters.COMPLETED;
+            2 -> Filters.UNCOMPLETED;
+            3 -> Filters.WITH_NOTIFICATION;
+            4 -> Filters.WITHOUT_NOTIFICATION;
+            else -> {return Filters.ALL}
+         }
+      }
+   }
 }
 
 enum class SortingMethods {

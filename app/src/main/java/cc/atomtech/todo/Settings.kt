@@ -1,6 +1,7 @@
 package cc.atomtech.todo
 
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
@@ -23,6 +24,16 @@ class Settings: AppCompatActivity() {
         exportButton = findViewById(R.id.settings_export);
 
         exportButton.setOnClickListener { Export.export(null); }
+
+        var defaultFilter = Filters.getEnumFromChipId(SharedPreferences.getInt(getString(R.string.default_filter))).ordinal;
+        filterDropdown.setSelection(defaultFilter);
+
+        filterDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                SharedPreferences.putInt(getString(R.string.default_filter), Filters.getEnumFromOrdinal(filterDropdown.selectedItemPosition).getChipId());
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
     }
 }
 

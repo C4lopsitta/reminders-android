@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -90,8 +91,11 @@ class MainActivity : AppCompatActivity() {
       //setup list
       viewList.layoutManager = LinearLayoutManager(this);
 
-      showRemindersBySelectedChip(
-         SharedPreferences.getInt(getString(R.string.default_filter)) ?: R.id.showall);
+      findViewById<Chip>(SharedPreferences.getInt(getString(R.string.default_filter)) ?: R.id.showall)
+         .isChecked = true;
+
+      showRemindersBySelectedChip(SharedPreferences.getInt(getString(R.string.default_filter)) ?: R.id.showall);
+      Log.i("SHAREDPREF", SharedPreferences.getInt(getString(R.string.default_filter)).toString());
 
       //add listener for floating action button
       fabAdd.setOnClickListener {

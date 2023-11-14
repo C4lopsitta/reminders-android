@@ -21,9 +21,9 @@ class SharedPreferences {
       }
 
       public fun putBoolean(key: String, value: Boolean) {
-         with(sharedPreferences?.edit()) {
+         with(sharedPreferences!!.edit()) {
             putBoolean(key, value);
-            this?.apply();
+            this.apply();
          }
       }
 
@@ -32,9 +32,9 @@ class SharedPreferences {
       }
 
       public fun putString(key: String, value: String) {
-         with(sharedPreferences?.edit()) {
+         with(sharedPreferences!!.edit()) {
             Companion.putString(key, value);
-            this?.apply();
+            this.apply();
          }
       }
 
@@ -43,9 +43,10 @@ class SharedPreferences {
       }
 
       public fun putInt(key: String, int: Int) {
-         with(sharedPreferences?.edit()) {
+         if(sharedPreferences == null) return;
+         with(sharedPreferences!!.edit()) {
             putInt(key, int);
-            this?.apply();
+            apply();
          }
       }
    }

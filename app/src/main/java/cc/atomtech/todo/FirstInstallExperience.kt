@@ -15,7 +15,7 @@ class FirstInstallExperience : AppCompatActivity() {
 
         start = findViewById(R.id.first_launch_start);
 
-        SharedPreferences.putInt(getString(R.string.default_filter), Filters.ALL.ordinal);
+        SharedPreferences.putInt(getString(R.string.default_filter), Filters.ALL.getChipId());
 
         start.setOnClickListener {
             returnToMainActivity();
