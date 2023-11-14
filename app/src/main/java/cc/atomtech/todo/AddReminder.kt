@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
-import java.sql.Timestamp
 import java.util.Calendar
 
 // TODO: Check if time/date is valid (in future)

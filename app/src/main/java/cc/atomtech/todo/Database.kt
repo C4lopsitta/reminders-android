@@ -1,12 +1,8 @@
 package cc.atomtech.todo
 
-import android.app.AlarmManager
-import android.content.ClipboardManager
-import android.content.SharedPreferences
 import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import java.sql.Timestamp
 
 @Entity(tableName = "reminders")
 data class Reminder(

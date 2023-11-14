@@ -1,6 +1,5 @@
 package cc.atomtech.todo
 
-import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,7 +10,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity.NOTIFICATION_SERVICE
 import java.util.Calendar
 
-//lateinit var notifManager: NotificationManager
 
 class Notifier {
    companion object {
