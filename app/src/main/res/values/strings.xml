@@ -29,4 +29,8 @@
     <string name="first_launch_splash">Welcome to Reminders!</string>
     <string name="first_launch_start">Let\'s start</string>
     <string name="whats_new">Whats new</string>
+    <string name="back">Back</string>
+    <string name="settings_label_default_filter">Default filtering method for reminders</string>
+    <string name="chip_with_notificaiton">With notification</string>
+    <string name="chip_wihtout_notificaiton">Without notification</string>
 </resources>

@@ -15,11 +15,10 @@ import java.util.Calendar
 
 class Notifier {
    companion object {
-      public const val REMINDER_CHANNEL_ID: String = "reminders";
+      public final const val REMINDER_CHANNEL_ID: String = "reminders";
 
       private var notifManager: NotificationManager? = null;
       private lateinit var context: Context;
-
 
       public fun notify(id: Int, notification: Notification) {
          notifManager?.notify(id, notification);
@@ -31,10 +30,10 @@ class Notifier {
          this.notifManager = getReminderNotificationChannelService(pkgContext, key, desc);
          context = pkgContext;
       }
-      public fun registerNotification(id: Int, title: String, desc: String, date: Calendar) {
+      public fun registerNotification(id: Long, title: String, desc: String, date: Calendar) {
          registerNotification(this.context, id, title, desc, date);
       }
-      public fun registerNotification(context: Context, id: Int, title: String, desc: String, date: Calendar) {
+      public fun registerNotification(context: Context, id: Long, title: String, desc: String, date: Calendar) {
          var intent = Intent(context, NotifReciever::class.java);
          intent.putExtra("title", title)
                .putExtra("desc", desc)

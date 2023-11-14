@@ -98,7 +98,7 @@ class ReminderAdapter(private val dataSet: List<Reminder>, private val pkgContex
       if(!body.isNullOrEmpty())
          clip += body;
 
-      clipboard.setPrimaryClip(ClipData.newPlainText("Reminder", clip));
+      Clipboard.copy(clip);
       Snackbar.make(view, pkgContext.getString(R.string.copy_copied), Snackbar.LENGTH_SHORT).show();
    }
 

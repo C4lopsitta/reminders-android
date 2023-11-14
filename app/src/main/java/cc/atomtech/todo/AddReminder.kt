@@ -42,9 +42,11 @@ class AddReminder : AppCompatActivity() {
         setContentView(R.layout.activity_add_reminder);
         topbar = findViewById(R.id.topbar);
         topbar.title = getString(R.string.desc_add);
+        topbar.navigationIcon = getDrawable(com.google.android.material.R.drawable.ic_arrow_back_black_24);
+        topbar.navigationContentDescription = getString(R.string.back);
         setSupportActionBar(topbar);
 
-
+        topbar.setNavigationOnClickListener { returnToMainActivity(); };
 
         reminderTitle = findViewById(R.id.reminder_title);
         layoutReminderTitle = findViewById(R.id.layout_reminder_title);
@@ -62,13 +64,9 @@ class AddReminder : AppCompatActivity() {
             addReminder(title, body, getNotifSwitch.isChecked, calendar);
         }
 
-        cancel.setOnClickListener {
-            returnToMainActivity();
-        }
+        cancel.setOnClickListener { returnToMainActivity(); };
 
         setupTimeAndDateInputs();
-
-
 
         reminderTitle.isFocusableInTouchMode = true;
         reminderTitle.requestFocus();
@@ -86,27 +84,26 @@ class AddReminder : AppCompatActivity() {
             return
         }
 
-        var timeInMillis: Long = 0
+        var timeInMillis: Long = 0;
+
 
         lifecycleScope.launch {
-            val reminder = Reminder(0, editBody, false, editTitle, getNotification, timeInMillis.toInt(), 0);
-            reminderDao.addReminder(reminder)
+            var dbId: Long;
+            val reminder = Reminder(0, editBody, false, editTitle, getNotification,
+                                    timeInMillis.toInt(), Calendar.getInstance().timeInMillis);
+            dbId = reminderDao.addReminder(reminder)
+
+            timeInMillis = calendar.timeInMillis;
+            if(getNotification) {
+                Notifier.registerNotification(dbId, editTitle, editBody ?: "", calendar);
+                Log.i("NOTIFICATION_ADD_REMINDER", "Notificaiton set with id $dbId for time ${calendar.timeInMillis}");
+            }
         }
 
-        timeInMillis = calendar.timeInMillis;
-        if(getNotification) {
-            Notifier.registerNotification(this,0, editTitle, editBody?: "", calendar);
-            Log.i("NOTIFICATION_ADD_REMINDER", "Notificaiton set");
-        }
+
 
         returnToMainActivity()
     }
-
-    //private fun attachOnClickToSwitch() {
-    //    getNotifSwitch.setOnClickListener {
-    //
-    //    }
-    //}
 
     private fun returnToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
@@ -129,8 +126,7 @@ class AddReminder : AppCompatActivity() {
             "${currentTime.get(java.util.Calendar.MONTH) + 1}/" +
             "${currentTime.get(java.util.Calendar.YEAR)}";
         val timeString =
-            "${currentTime.get(Calendar.HOUR_OF_DAY)}:" +
-            "${prettifyMinute(calendar.get(Calendar.MINUTE))}"
+            "${currentTime.get(Calendar.HOUR_OF_DAY)}:" + prettifyMinute(calendar.get(Calendar.MINUTE));
 
         reminderDate.setText(dateString);
         reminderTime.setText(timeString);
@@ -160,6 +156,4 @@ class AddReminder : AppCompatActivity() {
                 true).show();
         }
     }
-
-
 }

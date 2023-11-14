@@ -12,8 +12,8 @@ android {
         applicationId "cc.atomtech.todo"
         minSdk 28
         targetSdk 34
-        versionCode 12
-        versionName "0.9.0a"
+        versionCode 13
+        versionName "0.9.1"
 
         resourceConfigurations += ["en", "it", "fr"]
 

@@ -16,14 +16,18 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+
+// TODO: Refactor this monster
 
 class MainActivity : AppCompatActivity() {
    private lateinit var fabAdd: FloatingActionButton
@@ -49,7 +53,9 @@ class MainActivity : AppCompatActivity() {
       reminderDao = (db as AppDatabase).reminderDao()
 
       //init services
-      clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+
+      Clipboard.instantiate(getSystemService(CLIPBOARD_SERVICE) as ClipboardManager);
+
       alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
       Notifier.getNotificationService(getString(R.string.notif_reminder_key),
@@ -74,8 +80,8 @@ class MainActivity : AppCompatActivity() {
             //got permission
          }
          shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-            //TODO: Show view that explains why notifications are needed
-            Toast.makeText(this, "Bish gimmie permission", Toast.LENGTH_LONG).show()
+            // TODO: Show view that explains why notifications are needed
+            Toast.makeText(this, "gimmie permission", Toast.LENGTH_LONG).show()
          }
          else -> {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -83,12 +89,12 @@ class MainActivity : AppCompatActivity() {
       }
 
       //check if the app has already been launched before
-      checkIfAppHasRunBefore()
+      checkIfAppHasRunBefore();
 
       //init view elements
-      fabAdd = findViewById(R.id.fab_new)
-      viewList = findViewById(R.id.view_main)
-      chips = findViewById(R.id.chips)
+      fabAdd = findViewById(R.id.fab_new);
+      viewList = findViewById(R.id.view_main);
+      chips = findViewById(R.id.chips);
 
       //setup list
       viewList.layoutManager = LinearLayoutManager(this)
@@ -99,6 +105,27 @@ class MainActivity : AppCompatActivity() {
          val intent = Intent(this, AddReminder::class.java)
          startActivity(intent)
       }
+
+      chips.setOnCheckedStateChangeListener(ChipGroup.OnCheckedStateChangeListener() { chipGroup: ChipGroup, ints: MutableList<Int> ->
+         val chip: Chip = chipGroup.findViewById<Chip>(ints[0]);
+         when(chip.id) {
+            R.id.showall -> lifecycleScope.launch {
+               showRemindersList(reminderDao.getReminders());
+            }
+            R.id.showcompleted -> lifecycleScope.launch {
+               showRemindersList(reminderDao.getCompletedReminders());
+            }
+            R.id.showtocomplete -> lifecycleScope.launch {
+               showRemindersList(reminderDao.getUncompletedReminders());
+            }
+            R.id.showwithnotification -> lifecycleScope.launch {
+               showRemindersList(reminderDao.getRemindersWithNotification());
+            }
+            R.id.showwithoutnotification -> lifecycleScope.launch {
+               showRemindersList(reminderDao.getRemindersWithoutNotification());
+            }
+         }
+      })
    }
 
    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -125,6 +152,12 @@ class MainActivity : AppCompatActivity() {
          }
       }
       return super.onOptionsItemSelected(item)
+   }
+
+   private fun showRemindersList(list: List<Reminder>) {
+      lifecycleScope.launch {
+         showRemindersFromReminderList(list);
+      }
    }
 
    private fun getAndShowRemindersFromDb() {

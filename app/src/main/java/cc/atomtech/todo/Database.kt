@@ -31,6 +31,15 @@ interface ReminderDao {
     @Query("SELECT * FROM reminders WHERE isCompleted = 0")
     suspend fun getUncompletedReminders() : List<Reminder>
 
+    @Query("SELECT * FROM reminders WHERE getNotification = 1")
+    suspend fun getRemindersWithNotification() : List<Reminder>
+
+    @Query("SELECT * FROM reminders WHERE getNotification = 0")
+    suspend fun getRemindersWithoutNotification() : List<Reminder>
+
+    @Query("SELECT * FROM reminders WHERE notificationTimestamp > :time")
+    suspend fun getRemindersByNotification(time: Int) : List<Reminder>
+
     @Query("UPDATE reminders SET isCompleted = :isCompleted WHERE id = :id")
     fun updateIsCompleted(isCompleted: Boolean, id: Long)
 
@@ -49,7 +58,7 @@ interface ReminderDao {
     fun update(reminder: Reminder)
 
     @Insert
-    fun addReminder(reminder: Reminder)
+    fun addReminder(reminder: Reminder): Long
 
     @Delete
     fun deleteReminder(reminder: Reminder)
@@ -93,7 +102,7 @@ abstract class AppDatabase : RoomDatabase() {
 
 lateinit var db: RoomDatabase
 lateinit var reminderDao: ReminderDao
-lateinit var clipboard: ClipboardManager
+
 lateinit var sharedPref: SharedPreferences
 lateinit var alarmManager: AlarmManager
 

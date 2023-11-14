@@ -30,4 +30,8 @@
     <string name="first_launch_splash">Benvenuto in Promemoria!</string>
     <string name="first_launch_start">Iniziamo</string>
     <string name="whats_new">Novità</string>
+    <string name="back">Indietro</string>
+    <string name="settings_label_default_filter">Filtro predefinito per i promemoria</string>
+    <string name="chip_with_notificaiton">Con notifica</string>
+    <string name="chip_wihtout_notificaiton">Senza notifica</string>
 </resources>

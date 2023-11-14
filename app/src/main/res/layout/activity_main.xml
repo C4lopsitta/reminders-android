@@ -19,37 +19,62 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/white" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chips"
-        android:layout_width="match_parent"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topbar"
-        app:singleLine="true"
-        app:singleSelection="true" >
+        app:layout_constraintTop_toBottomOf="@+id/topbar">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/showall"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chips"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chip_showAll" />
+            android:layout_height="match_parent"
+            android:isScrollContainer="true"
+            app:singleLine="true"
+            app:singleSelection="true">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/showcompleted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chip_showCompleted" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/showall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/chip_showAll" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/showtocomplete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chip_showToComplete" />
-    </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/showcompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/chip_showCompleted" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/showtocomplete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/chip_showToComplete" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/showwithnotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/chip_with_notificaiton" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/showwithoutnotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/chip_wihtout_notificaiton" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new"
@@ -68,11 +93,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chips" />
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
