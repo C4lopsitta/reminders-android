@@ -35,5 +35,6 @@
     <string name="chip_with_notificaiton">Con notìfica</string>
     <string name="chip_wihtout_notificaiton">Sensa notìfica</string>
     <string name="settings_export_json">Tira fora i feuj in GIACU (JSON)</string>
-    <string name="reopen_to_pms">---</string>
+    <string name="reopen_to_pms">--- frstr ---</string>
+    <string name="reopen_to_exit_pms">--- frstr ---</string>
 </resources>

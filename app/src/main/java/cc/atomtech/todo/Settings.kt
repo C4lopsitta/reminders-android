@@ -1,5 +1,6 @@
 package cc.atomtech.todo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -44,17 +45,16 @@ class Settings: AppCompatActivity() {
 
       pmsModeCheckBox.setOnCheckedChangeListener { compoundButton, b ->
          run {
-            if (pmsModeCheckBox.isChecked) {
-               SharedPreferences.putBoolean("pms_mode", true);
-               Toast.makeText(this, getString(R.string.reopen_to_pms), Toast.LENGTH_LONG);
-               exitProcess(0);
-            } else {
-               SharedPreferences.putBoolean("pms_mode", false);
-               Toast.makeText(this, getString(R.string.reopen_to_exit_pms), Toast.LENGTH_LONG);
-               exitProcess(0);
-            }
+            if (pmsModeCheckBox.isChecked) { SharedPreferences.putBoolean("pms_mode", true); }
+            else { SharedPreferences.putBoolean("pms_mode", false); }
+            returnToMainActivity();
          }
       }
+   }
+   private fun returnToMainActivity() {
+      val intent = Intent(this, MainActivity::class.java)
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+      startActivity(intent)
    }
 }
 

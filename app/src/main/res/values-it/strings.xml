@@ -36,6 +36,6 @@
     <string name="chip_wihtout_notificaiton">Senza notifica</string>
     <string name="settings_export_json">Esporta i promemoria in JSON</string>
     <string name="pms_mode">Modalità piemontese</string>
-    <string name="reopen_to_pms">Devi riaprire l\'app per entrare in modalità Piemontese</string>
-    <string name="reopen_to_exit_pms">Devi riaprire l\'app per ritornare alla configurazione precedente</string>
+    <string name="reopen_to_pms">Potresti dover riaprire l\'app per entrare in modalità Piemontese</string>
+    <string name="reopen_to_exit_pms">Potresti dover riaprire l\'app per ritornare alla configurazione precedente</string>
 </resources>
