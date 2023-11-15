@@ -43,7 +43,7 @@ class Settings: AppCompatActivity() {
          override fun onNothingSelected(p0: AdapterView<*>?) {}
       }
 
-      pmsModeCheckBox.setOnCheckedChangeListener { compoundButton, b ->
+      pmsModeCheckBox.setOnCheckedChangeListener { _, _ ->
          run {
             if (pmsModeCheckBox.isChecked) { SharedPreferences.putBoolean("pms_mode", true); }
             else { SharedPreferences.putBoolean("pms_mode", false); }

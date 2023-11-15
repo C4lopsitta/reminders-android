@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filter_list">
+        <item>Tuti i feuj</item>
+        <item>Lòn che l\'as finì</item>
+        <item>Àncora da finì</item>
+        <item>Con notìfica</item>
+        <item>Sensa notìfica</item>
+    </string-array>
+</resources>
