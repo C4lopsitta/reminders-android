@@ -12,19 +12,33 @@ import java.util.logging.Logger
 
 class NotifReciever : BroadcastReceiver() {
    override fun onReceive(context: Context, intent: Intent) {
+      val id: Int = intent.getIntExtra("id", 0);
+      val title: String? = intent.getStringExtra("title");
+      val body: String? = intent.getStringExtra("desc");
+
+      val tapIntent = Intent(context, ShowReminder::class.java).apply {
+         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK;
+      }
+
+      tapIntent.putExtra("id", id.toLong())
+               .putExtra("title", title)
+               .putExtra("body", body)
+               .putExtra("getNotification", true);
+
+      val tapPendingIntent = PendingIntent
+         .getActivity(context, id, tapIntent, PendingIntent.FLAG_IMMUTABLE);
+
       val notif = NotificationCompat.Builder(context, Notifier.REMINDER_CHANNEL_ID)
-         .setContentTitle(intent.getStringExtra("title"))
+         .setContentTitle(title)
          .setSmallIcon(R.drawable.checked_icon_circle)
-         .setContentText(intent.getStringExtra("desc"))
+         .setContentText(body)
          .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+         .setContentIntent(tapPendingIntent)
          .build();
 
-      Log.i("NOTIFICATION_RECIEVER", "Test notification " +
-            "content: ${intent.getStringExtra("title")}; " +
-            "${intent.getStringExtra("desc")} " +
-            "; ID :: ${intent.getIntExtra("id", 0)}");
+      Log.i("NOTIFICATION_RECEIVER", "Test notification content: $title; $body; ID :: $id");
 
-      Notifier.notify(intent.getIntExtra("id", -0), notif);
+      Notifier.notify(id, notif);
    }
 
    companion object {

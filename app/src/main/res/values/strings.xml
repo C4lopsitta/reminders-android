@@ -35,4 +35,7 @@
     <string name="chip_wihtout_notificaiton">Without notification</string>
     <string name="settings_export_json">Export all reminders to JSON</string>
     <string name="default_filter" translatable="false">default_filter</string>
+    <string name="pms_mode">Piedmontese mode</string>
+    <string name="reopen_to_pms">You must restart the app to switch to Piedmontese</string>
+    <string name="reopen_to_exit_pms">You must restart the app to restore previous configuration</string>
 </resources>

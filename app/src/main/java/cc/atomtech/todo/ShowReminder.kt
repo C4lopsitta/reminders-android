@@ -12,85 +12,85 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class ShowReminder: AppCompatActivity() {
-    private lateinit var topbar: Toolbar
-    private lateinit var editTitle: TextInputEditText
-    private lateinit var editTitleWrapper: TextInputLayout
-    private lateinit var editBody: TextInputEditText
-    private lateinit var editBodyWrapper: TextInputLayout
-    private lateinit var save: Button
-    private lateinit var close: Button
-    private lateinit var getNotifSwitch: Switch
+   private lateinit var topbar: Toolbar
+   private lateinit var editTitle: TextInputEditText
+   private lateinit var editTitleWrapper: TextInputLayout
+   private lateinit var editBody: TextInputEditText
+   private lateinit var editBodyWrapper: TextInputLayout
+   private lateinit var save: Button
+   private lateinit var close: Button
+   private lateinit var getNotifSwitch: Switch
 
-    private var id: Long = 0
+   private var id: Long = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reminder)
-        topbar = findViewById(R.id.topbar)
-        setSupportActionBar(topbar)
+   override fun onCreate(savedInstanceState: Bundle?) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_reminder);
+      topbar = findViewById(R.id.topbar);
+      setSupportActionBar(topbar);
 
-        editTitle = findViewById(R.id.reminder_title)
-        editTitleWrapper = findViewById(R.id.layout_reminder_title)
-        editBody = findViewById(R.id.reminder_body)
-        editBodyWrapper = findViewById(R.id.reminder_body_layout)
-        save = findViewById(R.id.btn_save_edits)
-        close = findViewById(R.id.btn_cancel_edit)
-        getNotifSwitch = findViewById(R.id.getnotif_switch)
-        id = intent.getLongExtra("reminderID", 0)
+      editTitle = findViewById(R.id.reminder_title);
+      editTitleWrapper = findViewById(R.id.layout_reminder_title);
+      editBody = findViewById(R.id.reminder_body);
+      editBodyWrapper = findViewById(R.id.reminder_body_layout);
+      save = findViewById(R.id.btn_save_edits);
+      close = findViewById(R.id.btn_cancel_edit);
+      getNotifSwitch = findViewById(R.id.getnotif_switch);
+      id = intent.getLongExtra("reminderID", 0);
 
-        editTitle.setText(intent.getStringExtra("title"))
-        editBody.setText(intent.getStringExtra("body"))
-        getNotifSwitch.isChecked = intent.getBooleanExtra("getNotification", false)
-        close.setOnClickListener {returnToMainActivity()}
-        save.setOnClickListener{saveEdits()}
-    }
+      editTitle.setText(intent.getStringExtra("title"));
+      editBody.setText(intent.getStringExtra("body"));
+      getNotifSwitch.isChecked = intent.getBooleanExtra("getNotification", false);
+      close.setOnClickListener { returnToMainActivity(); };
+      save.setOnClickListener{ saveEdits(); };
+   }
 
-    private fun returnToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-    }
-    private fun saveEdits(){
-        val reminderTitle = editTitle.text.toString();
-        val reminderBody = editBody.text.toString();
-        if(reminderTitle.isNullOrEmpty()){
-            editTitleWrapper.error = getString(R.string.err_title_required)
-            return
-        }
-        if(reminderTitle.length > 128){
-            editTitleWrapper.error = getString(R.string.err_title_too_long)
-            return
-        }
-        reminderDao.updateBodyAndTitle(reminderTitle, reminderBody, id);
-        updateGetNotification(getNotifSwitch.isChecked, id, reminderTitle, reminderBody);
+   private fun returnToMainActivity() {
+      val intent = Intent(this, MainActivity::class.java)
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+      startActivity(intent)
+   }
+   private fun saveEdits(){
+      val reminderTitle = editTitle.text.toString();
+      val reminderBody = editBody.text.toString();
+      if(reminderTitle.isNullOrEmpty()){
+         editTitleWrapper.error = getString(R.string.err_title_required)
+         return
+      }
+      if(reminderTitle.length > 128){
+         editTitleWrapper.error = getString(R.string.err_title_too_long)
+         return
+      }
+      reminderDao.updateBodyAndTitle(reminderTitle, reminderBody, id);
+      updateGetNotification(getNotifSwitch.isChecked, id, reminderTitle, reminderBody);
 
-        returnToMainActivity()
-    }
+      returnToMainActivity()
+   }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.edit_menu, menu)
-        return true
-    }
+   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+      menuInflater.inflate(R.menu.edit_menu, menu)
+      return true
+   }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.delete -> {
-                reminderDao.deleteById(id)
-                returnToMainActivity()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+   override fun onOptionsItemSelected(item: MenuItem): Boolean {
+      when (item.itemId) {
+         R.id.delete -> {
+            reminderDao.deleteById(id)
+            returnToMainActivity()
+            return true
+         }
+      }
+      return super.onOptionsItemSelected(item)
+   }
 
-    private fun updateGetNotification(status: Boolean, id: Long, title: String, body: String) {
-        reminderDao.updateGetNotification(status, id);
+   private fun updateGetNotification(status: Boolean, id: Long, title: String, body: String) {
+      reminderDao.updateGetNotification(status, id);
 
-        when(status) {
-            // TODO : Add notification
-            else -> {
-                Notifier.unregisterNotification(this, id, title, body);
-            }
-        }
-    }
+      when(status) {
+         // TODO : Add notification
+         else -> {
+            Notifier.unregisterNotification(this, id, title, body);
+         }
+      }
+   }
 }

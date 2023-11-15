@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Te agiut a arcordete</string>
+    <string name="desc_add">Buta \'n feuj</string>
+    <string name="label_body">Lon che \'je \'n mes&#8230;</string>
+    <string name="date">Quand l\'è</string>
+    <string name="time">Àora</string>
+    <string name="save_btn">Memorié \'al feuj</string>
+    <string name="cancel_bnt">Torna andaré</string>
+    <string name="chip_showAll">Tuti i feuj</string>
+    <string name="chip_showCompleted">Lòn che l\'as finì</string>
+    <string name="delete">Gava</string>
+    <string name="delete_all">Gava tut</string>
+    <string name="save_edit_btn">Memorié lòn che l\'as fàit</string>
+    <string name="settings">Impostassion</string>
+    <string name="share">Mandè ad àutr</string>
+    <string name="show_notif">Vos la notìfica?</string>
+    <string name="copy_clip">Còpia \'ntel \'l rimprocc</string>
+    <string name="copy_copied">Còpiait \'ntel rimprocc</string>
+    <string name="snack_deleted">Feuj gavà</string>
+    <string name="snack_undo">Torna andaré</string>
+    <string name="snack_deleteAll">Gava tuti i feuj</string>
+    <string name="label_title">Tìtol del feuj&#8230;</string>
+    <string name="err_title_required">L\'as da buté \'n tìtol al feuj</string>
+    <string name="err_title_too_long">Vènta che \'l tìtol sia sota 128 càrateri</string>
+    <string name="share_header">Feuj</string>
+    <string name="chip_showToComplete">Àncora da finì</string>
+    <string name="notif_reminder_key">Avis dei feuj</string>
+    <string name="notif_reminder_desc">Notìfica dai feuj che l\'as butà</string>
+    <string name="first_launch_splash">Cerea da "l'aplicassion për i feuj"</string>
+    <string name="first_launch_start">Tacuma</string>
+    <string name="whats_new">Novità</string>
+    <string name="back">Andaré</string>
+    <string name="settings_label_default_filter">Filter nurmal për i feuj</string>
+    <string name="chip_with_notificaiton">Con notìfica</string>
+    <string name="chip_wihtout_notificaiton">Sensa notìfica</string>
+    <string name="settings_export_json">Tira fora i feuj in GIACU (JSON)</string>
+    <string name="reopen_to_pms">---</string>
+</resources>

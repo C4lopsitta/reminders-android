@@ -12,10 +12,10 @@ android {
         applicationId "cc.atomtech.todo"
         minSdk 28
         targetSdk 34
-        versionCode 13
-        versionName "0.9.1"
+        versionCode 15
+        versionName "0.9.2-piemontese"
 
-        resourceConfigurations += ["en", "it", "fr"]
+        resourceConfigurations += ["en", "it", "pms", "fr"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

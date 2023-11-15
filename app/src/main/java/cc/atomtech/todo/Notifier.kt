@@ -28,7 +28,8 @@ class Notifier {
          this.notifManager = getReminderNotificationChannelService(pkgContext, key, desc);
       }
       public fun registerNotification(context: Context, id: Long, title: String, desc: String, date: Calendar) {
-         var pendingIntent = getPendingIntent(context, id, title, desc);
+         val pendingIntent = getPendingIntent(context, id, title, desc);
+
 
          Log.i(LOG_TAG, "Notification content: $title - $desc " +
                "; ID :: $id; TIME ${date.timeInMillis}");

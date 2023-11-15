@@ -45,8 +45,18 @@
         android:id="@+id/settings_export"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/settings_export_json"
+        app:layout_constraintEnd_toEndOf="@+id/settings_dropdown_default_filter"
+        app:layout_constraintStart_toStartOf="@+id/settings_dropdown_default_filter"
+        app:layout_constraintTop_toBottomOf="@+id/settings_pms_mode" />
+
+    <CheckBox
+        android:id="@+id/settings_pms_mode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/pms_mode"
         app:layout_constraintEnd_toEndOf="@+id/settings_dropdown_default_filter"
         app:layout_constraintStart_toStartOf="@+id/settings_dropdown_default_filter"
         app:layout_constraintTop_toBottomOf="@+id/settings_dropdown_default_filter" />
