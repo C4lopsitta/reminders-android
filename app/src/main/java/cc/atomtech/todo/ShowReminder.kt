@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.util.Calendar
 
 class ShowReminder: AppCompatActivity() {
    private lateinit var topbar: Toolbar
@@ -41,6 +42,7 @@ class ShowReminder: AppCompatActivity() {
       editTitle.setText(intent.getStringExtra("title"));
       editBody.setText(intent.getStringExtra("body"));
       getNotifSwitch.isChecked = intent.getBooleanExtra("getNotification", false);
+      var date: Calendar = Calendar.getInstance();
       close.setOnClickListener { returnToMainActivity(); };
       save.setOnClickListener{ saveEdits(); };
    }

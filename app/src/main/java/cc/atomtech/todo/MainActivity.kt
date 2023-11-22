@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
       Notifier.getNotificationService(getString(R.string.notif_reminder_key),
          getString(R.string.notif_reminder_desc), this)
 
-      //prompt for notification permission
+      //prompt for notification permissio
       val requestPermissionLauncher =
          registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {

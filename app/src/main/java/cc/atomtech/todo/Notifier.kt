@@ -21,7 +21,6 @@ class Notifier {
       public fun notify(id: Int, notification: Notification) {
          notifManager?.notify(id, notification);
       }
-
       public fun getNotificationService(key: String, desc: String, pkgContext: Context) {
 //         if(notifManager == null)
 //            throw Exception("Notification manager has been already instantiated");
@@ -40,12 +39,10 @@ class Notifier {
             e.printStackTrace();
          }
       }
-
       public fun unregisterNotification(context: Context, id: Long, title: String, desc: String) {
          NotifReciever.dropExactAlarm(getPendingIntent(context, id, title, desc));
          Log.i(LOG_TAG, "DROPPED Notification ID :: $id");
       }
-
       public fun getPendingIntent(context: Context, id: Long, title: String, desc: String): PendingIntent {
          var intent = Intent(context, NotifReciever::class.java);
          intent.putExtra("title", title)
@@ -55,7 +52,6 @@ class Notifier {
             .getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE);
          return pendingIntent;
       }
-
       private fun getReminderNotificationChannelService(context: Context, name: String, desc: String): NotificationManager {
          val importance = NotificationManager.IMPORTANCE_DEFAULT
          val mChannel = NotificationChannel(Notifier.REMINDER_CHANNEL_ID, name, importance)
@@ -65,6 +61,4 @@ class Notifier {
          return notifManager
       }
    }
-
-
 }
